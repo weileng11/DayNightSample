@@ -1,0 +1,106 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+//        applicationId "com.yanzhenjie.daynight"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        release {
+            storeFile file('D:/dn.jks')
+            storePassword 'dn123456'
+            keyAlias = 'key0'
+            keyPassword 'dn123456'
+        }
+        debug {
+            storeFile file('D:/dn.jks')
+            storePassword 'dn123456'
+            keyAlias = 'key0'
+            keyPassword 'dn123456'
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    //差异化打包 (多渠道打包)
+    flavorDimensions 'heb'
+    //差异化打包
+    productFlavors {
+        project1 {
+            applicationId "com.android.app1"
+            versionCode 120
+            versionName "1.2.0"
+            // 自动生成@string/app_name为demo
+            resValue "string","app_name","@string/app_name_project1"
+            manifestPlaceholders = [icon: "@mipmap/logo", key: "11111"]//label: "APP1"
+            minSdkVersion 21
+            targetSdkVersion 25
+        }
+        project2 {
+            applicationId "com.android.app2"
+            versionCode 100
+            versionName "1.0.0"
+            // 自动生成@string/app_name为demo
+            resValue "string","app_name","@string/app_name_project1"
+            manifestPlaceholders = [ icon: "@mipmap/logo", push_key: "22222"]//label: "APP2",
+            minSdkVersion 21
+            targetSdkVersion 25
+        }
+    }
+
+    // 修改打包 apk 名字
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (variant.buildType.name.equals('release')) {
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    def chineseName = ""
+                    switch(variant.productFlavors[0].name) {
+                        case "project1":
+                            chineseName = "APK1"
+                            break
+                        case "project2":
+                            chineseName = "APK2"
+                            break
+                    }
+                    outputFileName = "${chineseName}_${productFlavors.versionName}_${productFlavors.applicationId}_${releaseTime()}.apk"
+//                    output.outputFile = new File(outputFile.parent, fileName)
+                }
+            } else if (variant.buildType.name.equals('debug')) {
+                if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                    outputFileName = "Bosdon_debug_测试_${defaultConfig.versionName}_${releaseTime()}.apk"
+//                    outputFileName = new File(outputFileName.parent, fileName)
+                }
+
+            }
+        }
+    }
+}
+
+def releaseTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+08:00"))
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.4.0'
+}
