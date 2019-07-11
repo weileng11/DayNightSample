@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
     }
     ImageView mImageView;
+    TextView mTvContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +29,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.fab).setOnClickListener(this);
 
         mImageView= (ImageView) findViewById(R.id.iv_test);
+        mTvContent= (TextView) findViewById(R.id.tv_content);
+
         if(BuildConfig.FLAVOR.equals("project1")){
             mImageView.setImageResource(R.drawable.ic_main_devce_gateway);
+            mTvContent.setText("xxxxxxxcccc");
         }else if(BuildConfig.FLAVOR.equals("project2")){
             mImageView.setImageResource(R.drawable.ic_main_device_add);
+            mTvContent.setText("cccccccccccc");
         }
 
     }

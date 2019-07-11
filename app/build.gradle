@@ -81,7 +81,7 @@ android {
                             chineseName = "APK2"
                             break
                     }
-                    outputFileName = "${chineseName}_${productFlavors.versionName}_${productFlavors.applicationId}_${releaseTime()}.apk"
+                    outputFileName = "${chineseName}_${variant.flavorName}_${productFlavors.versionName}_${productFlavors.applicationId}_${releaseTime()}.apk"
 //                    output.outputFile = new File(outputFile.parent, fileName)
                 }
             } else if (variant.buildType.name.equals('debug')) {

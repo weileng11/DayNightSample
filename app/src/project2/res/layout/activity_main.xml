@@ -38,4 +38,14 @@
         android:src="@mipmap/ic_launcher"
         android:layout_marginTop="300dp"
         />
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我们都是好孩子"
+        android:layout_marginTop="400dp"
+        android:textColor="@color/colorAccent"
+        />
 </android.support.design.widget.CoordinatorLayout>
