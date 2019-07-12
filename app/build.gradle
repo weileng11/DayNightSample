@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+//获取local.properties的内容
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -14,10 +18,15 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('D:/dn.jks')
-            storePassword 'dn123456'
-            keyAlias = 'key0'
-            keyPassword 'dn123456'
+//            storeFile file('D:/dn.jks')
+//            storePassword 'dn123456'
+//            keyAlias = 'key0'
+//            keyPassword 'dn123456'
+
+            storeFile file(properties.getProperty("keystroe_storeFile"))
+            storePassword properties.getProperty("keystroe_storePassword")
+            keyAlias properties.getProperty("keystroe_keyAlias")
+            keyPassword properties.getProperty("keystroe_keyPassword")
         }
         debug {
             storeFile file('D:/dn.jks')
@@ -29,7 +38,38 @@ android {
 
     buildTypes {
         release {
+            // release模式下，显示log
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+
+            //为已经存在的applicationId添加后缀
+            applicationIdSuffix ".debug"
+            // 为版本名添加后缀
+            versionNameSuffix "-debug"
+            // 不开启混淆
             minifyEnabled false
+            // 不开启ZipAlign优化
+            zipAlignEnabled false
+            // 不移除无用的resource文件
+            shrinkResources false
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            // debug模式下，显示log
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+
+            //为已经存在的applicationId添加后缀
+            applicationIdSuffix ".debug"
+            // 为版本名添加后缀
+            versionNameSuffix "-debug"
+            // 不开启混淆
+            minifyEnabled false
+            // 不开启ZipAlign优化
+            zipAlignEnabled false
+            // 不移除无用的resource文件
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
