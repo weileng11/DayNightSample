@@ -17,6 +17,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--配合build.gradle使用-->
+        <!--<meta-data-->
+            <!--android:name="com.alibaba.app.appkey"-->
+            <!--android:value="${ALI_PUSH_APPKEY}"/> &lt;!&ndash; 请填写你自己的- appKey &ndash;&gt;-->
+        <!--<meta-data-->
+            <!--android:name="com.alibaba.app.appsecret"-->
+            <!--android:value="${ALI_PUSH_APPSECRET}"/> &lt;!&ndash; 请填写你自己的appSecret &ndash;&gt;-->
     </application>
 
 </manifest>

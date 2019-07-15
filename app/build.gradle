@@ -10,10 +10,10 @@ android {
 
     defaultConfig {
 //        applicationId "com.yanzhenjie.daynight"
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+//        minSdkVersion 15
+//        targetSdkVersion 23
+//        versionCode 1
+//        versionName "1.0"
     }
 
     signingConfigs {
@@ -23,6 +23,7 @@ android {
 //            keyAlias = 'key0'
 //            keyPassword 'dn123456'
 
+            //local.properties的内容(调用上面第4行代码)
             storeFile file(properties.getProperty("keystroe_storeFile"))
             storePassword properties.getProperty("keystroe_storePassword")
             keyAlias properties.getProperty("keystroe_keyAlias")
@@ -38,6 +39,16 @@ android {
 
     buildTypes {
         release {
+//            applicationVariants.all { variant ->
+//                switch(variant.productFlavors[0].name) {
+//                    case "project1":
+//                        manifestPlaceholders = [ALI_PUSH_APPKEY: "25233908", ALI_PUSH_APPSECRET: "0fb28d910393ee25fa9e48463c96f2ea"]
+//                        break
+//                    case "project2    ":
+//                        break
+//                }
+//            }
+//            resValue "string", "app_name", "@string/app_name_release"
             // release模式下，显示log
             buildConfigField("boolean", "LOG_DEBUG", "true")
 
@@ -57,6 +68,17 @@ android {
         }
 
         debug {
+//            applicationVariants.all { variant ->
+//                switch(variant.productFlavors[0].name) {
+//                    case "project1":
+//                        manifestPlaceholders = [ALI_PUSH_APPKEY: "27580051", ALI_PUSH_APPSECRET: "7f154648a580e5fce62334ccd9634d3d"]
+//                        break
+//                    case "project2":
+//                        break
+//                }
+//            }
+//            resValue "string", "app_name", "@string/app_name_debug"
+
             // debug模式下，显示log
             buildConfigField("boolean", "LOG_DEBUG", "true")
 
@@ -106,6 +128,10 @@ android {
         }
     }
 
+    //1. //差异化名称variant.productFlavors[0].name ==project1
+    //2. variant.flavorName  project1
+    //3. productFlavors.versionName ==1.0.0
+    //4. productFlavors.applicationId ==com.android.app2
     // 修改打包 apk 名字
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
